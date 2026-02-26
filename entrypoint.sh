@@ -41,4 +41,4 @@ echo "Monitor API PID: $MONITOR_PID"
 sleep 2
 
 echo "Starting OpenClaw Gateway on port 8080..."
-exec openclaw gateway --port 8080 --force
+exec openclaw gateway --port 8080
