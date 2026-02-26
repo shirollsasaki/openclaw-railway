@@ -8,10 +8,18 @@ echo "=== OpenClaw Railway Entrypoint ==="
 echo "OPENCLAW_HOME: $OPENCLAW_HOME"
 
 mkdir -p "$OPENCLAW_HOME"
-mkdir -p "$OPENCLAW_HOME/scripts"
 mkdir -p "$OPENCLAW_HOME/cron/runs"
 mkdir -p "$OPENCLAW_HOME/logs"
 
+# Seed volume from GitHub tarball if not yet initialized
+if [ ! -f "$OPENCLAW_HOME/openclaw.json" ]; then
+  echo "Volume is empty — seeding from GitHub tarball..."
+  curl -L -o /tmp/seed.tar.gz https://github.com/shirollsasaki/openclaw-railway/raw/main/seed.tar.gz
+  tar -xzf /tmp/seed.tar.gz -C "$OPENCLAW_HOME/"
+  rm /tmp/seed.tar.gz
+  echo "Seed complete. Files:"
+  ls "$OPENCLAW_HOME/"
+fi
 if [ ! -f "$OPENCLAW_HOME/scripts/x-post.mjs" ]; then
   echo "Copying scripts to volume..."
   cp -r /app/scripts/. "$OPENCLAW_HOME/scripts/"
