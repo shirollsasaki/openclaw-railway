@@ -15,7 +15,7 @@ import os
 from datetime import datetime
 
 # ─── CONFIG ────────────────────────────────────────────────────────────────────
-KOO_API_KEY = "ks_4f504de0b636ac8f442c4bc0ab35e6763f72f16a22451abb88bebae4714fc29d"
+KOO_API_KEY = os.environ.get("KOO_API_KEY", "")
 KOO_BASE_URL = "https://api.koosocial.com"
 
 # Keywords relevant to @launcodes (claudemaxxing angle)

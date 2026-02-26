@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "socket": {
+    "path": "/path/to/.openclaw/exec-approvals.sock",
+    "token": "YOUR_EXEC_TOKEN_HERE"
+  },
+  "defaults": {
+    "security": "allowlist",
+    "ask": "on-miss",
+    "askFallback": "deny",
+    "autoAllowSkills": true,
+    "allowlist": [
+      {
+        "pattern": "/usr/local/bin/*",
+        "id": "homebrew-bins"
+      },
+      {
+        "pattern": "/usr/local/bin/*",
+        "id": "local-bins"
+      },
+      {
+        "pattern": "/usr/bin/env",
+        "id": "env"
+      },
+      {
+        "pattern": "jq",
+        "id": "jq"
+      },
+      {
+        "pattern": "grep",
+        "id": "grep"
+      },
+      {
+        "pattern": "cut",
+        "id": "cut"
+      },
+      {
+        "pattern": "sort",
+        "id": "sort"
+      },
+      {
+        "pattern": "uniq",
+        "id": "uniq"
+      },
+      {
+        "pattern": "head",
+        "id": "head"
+      },
+      {
+        "pattern": "tail",
+        "id": "tail"
+      },
+      {
+        "pattern": "tr",
+        "id": "tr"
+      },
+      {
+        "pattern": "wc",
+        "id": "wc"
+      }
+    ]
+  },
+  "agents": {
+    "bighead": {
+      "security": "allowlist",
+      "ask": "on-miss",
+      "askFallback": "deny",
+      "autoAllowSkills": true,
+      "allowlist": [
+        {
+          "pattern": "/usr/local/bin/*",
+          "id": "homebrew-bins"
+        },
+        {
+          "pattern": "/usr/local/bin/*",
+          "id": "local-bins"
+        },
+        {
+          "pattern": "/usr/bin/env",
+          "id": "env"
+        }
+      ]
+    },
+    "gilfoyle": {
+      "security": "allowlist",
+      "ask": "on-miss",
+      "askFallback": "deny",
+      "autoAllowSkills": true,
+      "allowlist": [
+        {
+          "pattern": "/usr/local/bin/*",
+          "id": "homebrew-bins"
+        },
+        {
+          "pattern": "/usr/local/bin/*",
+          "id": "local-bins"
+        },
+        {
+          "pattern": "/usr/bin/env",
+          "id": "env"
+        }
+      ]
+    }
+  }
+}

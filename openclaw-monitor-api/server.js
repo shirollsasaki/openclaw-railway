@@ -29,6 +29,26 @@ app.use((req, res, next) => {
   }
 });
 
+// Bearer token auth (required for cloud deployment)
+const MONITOR_API_TOKEN = process.env.MONITOR_API_TOKEN;
+if (!MONITOR_API_TOKEN) {
+  console.warn('[monitor-api] WARNING: MONITOR_API_TOKEN not set — running without authentication');
+}
+
+app.use((req, res, next) => {
+  // Health check is always public
+  if (req.method === 'GET' && req.path === '/') return next();
+  
+  // If no token configured, allow all (local dev mode)
+  if (!MONITOR_API_TOKEN) return next();
+  
+  const auth = req.headers['authorization'];
+  if (!auth || !auth.startsWith('Bearer ') || auth.slice(7) !== MONITOR_API_TOKEN) {
+    return res.status(401).json({ error: 'unauthorized' });
+  }
+  next();
+});
+
 // Health check endpoint
 app.get('/', (req, res) => {
   res.json({ status: 'ok', name: 'openclaw-monitor-api' });
