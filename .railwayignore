@@ -1,0 +1,8 @@
+bighead-trading/
+OpenClawMissionControl/
+.sisyphus/
+*.tar.gz
+*.tar
+.openclaw/
+node_modules/
+.git/
