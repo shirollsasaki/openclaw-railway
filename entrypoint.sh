@@ -20,6 +20,30 @@ if [ ! -f "$OPENCLAW_HOME/openclaw.json" ]; then
   echo "Seed complete. Files:"
   ls "$OPENCLAW_HOME/"
 fi
+
+# Write Anthropic auth profile from env var
+if [ -n "$ANTHROPIC_API_KEY" ]; then
+  AUTH_DIR="$OPENCLAW_HOME/agents/main/agent"
+  mkdir -p "$AUTH_DIR"
+  if [ ! -f "$AUTH_DIR/auth-profiles.json" ]; then
+    echo "Writing Anthropic auth profile..."
+    cat > "$AUTH_DIR/auth-profiles.json" <<EOF
+{
+  "version": 1,
+  "profiles": {
+    "anthropic:default": {
+      "type": "token",
+      "provider": "anthropic",
+      "token": "$ANTHROPIC_API_KEY"
+    }
+  },
+  "lastGood": {
+    "anthropic": "anthropic:default"
+  }
+}
+EOF
+  fi
+fi
 if [ ! -f "$OPENCLAW_HOME/scripts/x-post.mjs" ]; then
   echo "Copying scripts to volume..."
   cp -r /app/scripts/. "$OPENCLAW_HOME/scripts/"
