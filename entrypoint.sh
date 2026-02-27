@@ -21,13 +21,10 @@ if [ ! -f "$OPENCLAW_HOME/openclaw.json" ]; then
   ls "$OPENCLAW_HOME/"
 fi
 
-# Write Anthropic auth profile from env var
+# Write Anthropic auth profile from env var — always overwrite to pick up key changes
 if [ -n "$ANTHROPIC_API_KEY" ]; then
-  AUTH_DIR="$OPENCLAW_HOME/agents/main/agent"
-  mkdir -p "$AUTH_DIR"
-  if [ ! -f "$AUTH_DIR/auth-profiles.json" ]; then
-    echo "Writing Anthropic auth profile..."
-    cat > "$AUTH_DIR/auth-profiles.json" <<EOF
+  echo "Writing Anthropic auth profiles for all agents..."
+  AUTH_JSON=$(cat <<EOF
 {
   "version": 1,
   "profiles": {
@@ -42,7 +39,13 @@ if [ -n "$ANTHROPIC_API_KEY" ]; then
   }
 }
 EOF
-  fi
+)
+  for agent_dir in main richard jared erlich gilfoyle monica bighead dinesh; do
+    DIR="$OPENCLAW_HOME/agents/$agent_dir/agent"
+    mkdir -p "$DIR"
+    echo "$AUTH_JSON" > "$DIR/auth-profiles.json"
+  done
+  echo "Auth profiles written."
 fi
 if [ ! -f "$OPENCLAW_HOME/scripts/x-post.mjs" ]; then
   echo "Copying scripts to volume..."
